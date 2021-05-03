@@ -37,8 +37,8 @@
 			</tr>
 			
 			<c:forEach items="${list}" var="item"> <!-- items = EL식 주소값 -->
-				<tr class = "record" onclick="moveToDetail(${item.iboard});">
-					<td>${item.iboard}</td>
+				<tr class = "record" onclick="moveToDetail(${item.iboard});">	<!-- 클릭 시 moveToDetail에 값이 입력되고 페이지로 이동한다. -->
+					<td>${item.iboard}</td>										<!-- onclick을 사용할 시 a태그를 여러번 사용하지 않아도 된다. -->
 					<td>${item.title}</td>
 					<td>${item.regdt}</td>
 				</tr>
