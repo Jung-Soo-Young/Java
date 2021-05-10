@@ -13,16 +13,15 @@ public class BoardDetailServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String iboard = request.getParameter("iboard");
-		System.out.println("iboard : " + iboard);
+		// String iboard = request.getParameter("iboard");
+		// int intIboard = Integer.parseInt(iboard);
 		
-		int intIboard = Integer.parseInt(iboard);
-
-		BoardVO3 data = BoardDAO.selBoard(intIboard);	// BoardVO3의 data 객체에 title, ctnt, regdt 값들을 담을 것이다.
+		int iboard = MyUtils.getParamInt("iboard", request);	// 문자 iboard의 값을 정수로 변환하는 메소드
+		
+		BoardVO3 data = BoardDAO.selBoard(iboard);	// BoardVO3의 data 객체에 title, ctnt, regdt 값들을 담을 것이다.
 		request.setAttribute("data", data);
 		
-		String jsp = "/WEB-INF/view/detail3.jsp";
-		request.getRequestDispatcher(jsp).forward(request, response);
+		MyUtils.openJSP("detail3", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -20,8 +20,13 @@ public class BoardListServlet3 extends HttpServlet {
 														// BoardDAO.selBoardList() = ArrayList의 배열 주소 값 -> BoardDAO에 객체 생성
 		request.setAttribute("list", list);
 		
-		String jsp = "/WEB-INF/view/list3.jsp";
-		request.getRequestDispatcher(jsp).forward(request, response);
+		MyUtils.openJSP("list3", request, response);		// static일 경우 = 클래스명.메소드명
+		
+		/*
+		MyUtils utils = new MyUtils();					// void = 객체 생성 후 메소드 호출
+		utils.openJSP(jsp, request, response);
+		*/
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

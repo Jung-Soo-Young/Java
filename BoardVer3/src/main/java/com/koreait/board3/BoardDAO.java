@@ -9,7 +9,7 @@ import java.util.List;
 // Data Access Object (DB담당)
 public class BoardDAO {
 	
-	// 글 등록 (Create)
+	// 글 등록 (Write)
 	public static int insertBoard(BoardVO3 vo) { // 다리역할, 객체생성
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -34,9 +34,9 @@ public class BoardDAO {
 		return 0;
 	}
 	
-	// Select 부분
+	// Select 부분 (list)
 	public static List<BoardVO3> selBoardList() {
-		List<BoardVO3> list = new ArrayList();
+		List<BoardVO3> list = new ArrayList();	// 배열리스트 객체 생성
 		
 		Connection con = null;
 		PreparedStatement ps = null; // 클래스 명
@@ -51,14 +51,14 @@ public class BoardDAO {
 			rs = ps.executeQuery(); // Select 구문만 사용 ( executeQuery() )
 			
 			while(rs.next()) {	// rs.next()를 실행해서 레코드가 있을 경우 다음 실행
-				BoardVO3 vo = new BoardVO3();
+				BoardVO3 vo = new BoardVO3();	// vo 객체 생성
 				list.add(vo);		// 레퍼런스 변수여서 어느 위치에 놓여도 상관이 없다.
 				
-				int iboard = rs.getInt("iboard");
+				int iboard = rs.getInt("iboard");	// iboard, title, regdt 선언
 				String title = rs.getString("title");
 				String regdt = rs.getString("regdt");
 				
-				vo.setIboard(iboard);
+				vo.setIboard(iboard); // vo 객체에 저장
 				vo.setTitle(title);
 				vo.setRegdt(regdt);
 			}
@@ -109,7 +109,7 @@ public class BoardDAO {
 		return null;
 	}
 	
-	// Update 수정 부분
+	// Update 부분 (Mod)
 		public static int updBoard(BoardVO3 vo) {	// 
 			Connection con = null;
 			PreparedStatement ps = null;
@@ -138,7 +138,7 @@ public class BoardDAO {
 			return 0;
 		}
 	
-	// Delete 삭제 부분
+	// Delete 부분 (del)
 	public static int delBoard(BoardVO3 param) {	// BoardVO3 객체 안에 set 설정을 해놓았음
 		Connection con = null;
 		PreparedStatement ps = null;
