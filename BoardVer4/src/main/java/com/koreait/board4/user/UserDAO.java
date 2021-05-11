@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.koreait.board4.DBUtils;
 
 public class UserDAO {
@@ -45,13 +47,23 @@ public class UserDAO {
 		try {
 			con = DBUtils.getCon();
 			ps = con.prepareStatement(sql);
+			
 			ps.setString(1, param.getUid());
 			rs = ps.executeQuery();
 			
 			
 			if(rs.next()) {		// 아이디가 있는 경우 & 비밀번호 확인
-				String dbpw = rs.getString("upw");		// DB의 pw와 login의 pw가 일치하는가?
-				if(dbpw.equals(param.getUpw())) {
+				String dbpw = rs.getString("upw");	
+				// if(dbpw.equals(param.getUpw())
+				
+				if(BCrypt.checkpw(param.getUpw(), dbpw)) {	// BCrypt.checkpw() = 암호화된 비밀번호 체크 = (암호화되지 않은 비밀번호, 암호화 된 비밀번호)
+					
+					int iuser = rs.getInt("iuser");		// iuser, unm의 값을 담아놓는다.
+					String unm = rs.getString("unm");
+					
+					param.setIuser(iuser);			 
+					param.setUnm(unm);
+					
 					return 1;
 				} else {
 					return 3;

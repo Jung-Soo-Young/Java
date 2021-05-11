@@ -7,7 +7,13 @@
 <title>로그인</title>
 </head>
 <body>
+<style>
+	.class {
+		font-color : red;
+	}
+</style>
 	<div>
+		<div class = "errMsg">${errMsg}</div>
 		<div>
 			<form action = "/user/login" method = "post">
 				<div><input type = "text" name = "uid" placeholder="아이디"></div>

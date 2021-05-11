@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.koreait.board4.MyUtils;
 
 @WebServlet("/user/join")
@@ -25,10 +27,13 @@ public class JoinServlet extends HttpServlet {
 		// String gender = request.getParameter("gender");		// gender을 문자로 받아왔지만 int로 선언해 두었기 때문에 타입이 일치하지 않음
 		int gender = MyUtils.getParamInt("gender", request);	// IntGender = 정수로 변환해주는 메소드 선언
 		
+		String hashedUpw = BCrypt.hashpw(upw, BCrypt.gensalt());	// pw 암호화
+		System.out.println("hashedUpw : " + hashedUpw);
+		
 		UserVO vo = new UserVO();
 		vo.setUid(uid);
 		vo.setUnm(unm);
-		vo.setUpw(upw);
+		vo.setUpw(hashedUpw);
 		vo.setGender(gender);
 		
 		UserDAO.joinUser(vo);				// joinUser 메소드 호출
