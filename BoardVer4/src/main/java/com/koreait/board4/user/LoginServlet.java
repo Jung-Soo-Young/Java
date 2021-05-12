@@ -16,9 +16,9 @@ public class LoginServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession hs = request.getSession();
-		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
+		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");	// 있으면 주소값 없으면 null
 		
-		if(loginUser != null) {
+		if(loginUser != null) {						// 로그인 상태
 			response.sendRedirect("/board/list");
 			return;
 		}

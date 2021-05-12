@@ -32,16 +32,20 @@ public class WriteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
-		
+		/*
 		HttpSession hs = request.getSession();	// session 값 받아오기
-		UserVO loginUser = (UserVO)hs.getAttribute("loginUser");
+		UserVO loginUser = (UserVO)hs.getAttribute("loginUser");	// 로그인 되어야지 값을 받아 올 수 있음
 		int iuser = loginUser.getIuser();		// 로그인 한 사람의 iuser 값 받아오기
+		*/
+		
+		int iuser = MyUtils.getLoginUserPk(request);	// iuser = 로그인 한 사람의 정보들
 		
 		// 제목, 내용, 글쓴이 pk값을 BoardVO 객체에 담기
 		BoardVO param = new BoardVO();
 		param.setTitle(title);
 		param.setCtnt(ctnt);
 		param.setIuser(iuser);
+		
 		BoardDAO.insBoard(param);
 		
 		response.sendRedirect("list");	

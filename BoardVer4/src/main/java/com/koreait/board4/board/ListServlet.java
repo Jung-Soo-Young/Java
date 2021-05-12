@@ -23,7 +23,7 @@ public class ListServlet extends HttpServlet {
 		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
 		
 		// 로그인 안 되어 있으면 로그인 화면으로 이동
-		if(loginUser == null) {
+		if(loginUser == null) {	// 로그아웃 상태면 로그인 페이지로 이동
 			response.sendRedirect("/user/login");	// login만 적을 경우 -> /board/login으로 이동하게 됨
 			return;
 		} 
