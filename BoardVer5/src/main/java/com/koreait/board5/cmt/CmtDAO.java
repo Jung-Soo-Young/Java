@@ -69,6 +69,26 @@ public class CmtDAO {
 			DBUtils.close(con, ps, rs);
 		}
 		return list;
+	}
+	
+	public static void delCmt(CmtVO param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " DELETE FROM t_board_cmt "
+					+ " WHERE icmt = ? And iuser = ? ";
 		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			
+			ps.setInt(1, param.getIcmt());
+			ps.setInt(2, param.getIuser());
+			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
 	}
 }

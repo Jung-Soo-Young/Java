@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>리스트</title>
-<script defer src="/res/js/boardList.js"></script>	<!-- defer을 사용하면 위치에 상관없이 마지막에 실행 -->
+<script defer src="/res/js/boardList.js"></script>	<!-- defer을 사용하면 위치에 상관없이 마지막에 실행 --> 
+													<!-- 캐시 없애는 법 제일 마지막에 ?ver=숫자 -->
 <link href = "/res/css/boardList.css" rel = "stylesheet">
 </head>
 <body>
