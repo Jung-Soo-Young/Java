@@ -1,0 +1,4 @@
+@charset "UTF-8";
+
+.record { cursror : pointer; }
+.record:hover { background-color: #1abc9c; }
