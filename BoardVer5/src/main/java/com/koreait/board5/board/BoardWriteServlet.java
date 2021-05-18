@@ -42,6 +42,8 @@ public class BoardWriteServlet extends HttpServlet {
 		
 		BoardDAO.insBoard(vo);
 		
+		// 글쓰기와 글수정의 다른점은 iboard의 값을 불러오느냐의 차이
+		
 		response.sendRedirect("boardList");
 	}
 

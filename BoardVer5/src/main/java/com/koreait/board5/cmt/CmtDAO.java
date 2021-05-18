@@ -9,7 +9,7 @@ import java.util.List;
 import com.koreait.board5.DBUtils;
 
 public class CmtDAO {
-	public static void insCmt(CmtVO param) {
+	public static void insCmt(CmtVO param) {	// Insert 부분 (값 삽입)
 		Connection con = null;
 		PreparedStatement ps= null;
 		
@@ -71,7 +71,30 @@ public class CmtDAO {
 		return list;
 	}
 	
-	public static void delCmt(CmtVO param) {
+	public static void updCmt(CmtVO param) {	// Update (수정 부분)
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " UPDATE t_board_cmt "		// Update 테이블명 - Set
+					+ " SET cmt = ? "
+					+ " WHERE iuser = ? AND icmt = ? ";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, param.getCmt());
+			ps.setInt(2, param.getIuser());
+			ps.setInt(3, param.getIcmt());
+			
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
+	
+	public static void delCmt(CmtVO param) {	// Delete (삭제 부분) - icmt와 iuser의 값이 일치할 때
 		Connection con = null;
 		PreparedStatement ps = null;
 		String sql = " DELETE FROM t_board_cmt "

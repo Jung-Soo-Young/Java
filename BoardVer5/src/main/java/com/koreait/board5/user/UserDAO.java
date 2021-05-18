@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import com.koreait.board5.DBUtils;
 
 public class UserDAO {
-	public static UserVO selUser(UserVO param) {
+	public static UserVO selUser(UserVO param) {	// 로그인 = Select
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -19,7 +19,7 @@ public class UserDAO {
 		try {
 			con = DBUtils.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, param.getUid());
+			ps.setString(1, param.getUid());	// uid 정보를 입력
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				int iuser = rs.getInt("iuser");
@@ -37,15 +37,17 @@ public class UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return result;
+		} finally {
+			DBUtils.close(con, ps, rs);
 		}
 	}
 	
-	public static int joinUser(UserVO param) {
+	public static int joinUser(UserVO param) {	// 회원가입 부분
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		String sql = " INSERT INTO t_user (uid, upw, unm, gender) "
-					+ " VALUES (?, ?, ?, ?) ";
+					+ " VALUES (?, ?, ?, ?) ";	// id, pw, name, gender 입력
 		
 		try {
 			con = DBUtils.getCon();

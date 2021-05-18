@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>${data.title}</title>
+<style>
+	.hidden {
+		display: none;
+	}
+</style>
 <script defer src = "/res/js/boardDetail.js"></script>
 </head>
 <body>
@@ -17,11 +22,22 @@
 	
 	<h3>댓글</h3>
 	<div>
-		<form action = "regCmt" method = "post">
+		<form id = "insFrm" action = "cmt" method = "post">
+			<input type = "hidden" name = "icmt" value = "0">
 			<input type = "hidden" name = "iboard" value = "${data.iboard}">
 			<div>
 				<textarea name = "cmt" placeholder = "댓글내용"></textarea>
 				<input type = "submit" value = "댓글작성">
+			</div>
+		</form>
+		
+		<form id = "updFrm" action = "cmt" method = "post" class = "hidden">
+			<input type = "hidden" name = "icmt" value = "0">
+			<input type = "hidden" name = "iboard" value = "${data.iboard}">
+			<div>
+				<textarea name = "cmt" placeholder = "댓글내용"></textarea>
+				<input type = "submit" value = "댓글수정">
+				<input type = "button" value = "댓글취소" onclick="showInsFrm();">
 			</div>
 		</form>
 	</div>
@@ -39,9 +55,9 @@
 					<td>${item.unm}</td>
 					<td>${item.regdate}</td>
 					<td>
-						<c:if test = "${item.iuser == loginUser.iuser}">
-							<input type = "button" value = "수정">
-							<button onclick="delCmt(${data.iboard}, ${item.icmt});">삭제</button>
+						<c:if test = "${item.iuser == loginUser.iuser}">	<!-- 댓글을 작성한 사람과 로그인 사람의 pk값 일치 여부 -->
+							<input type = "button" value = "수정" onclick="updCmt(${item.icmt}, '${item.cmt.trim()}');">		<!-- item.cmt는 문자열이기 때문에 ''를 사용 --> <!-- .trim() 양쪽 여백 제거 -->
+							<button onclick="delCmt(${data.iboard}, ${item.icmt});">삭제</button>		<!-- data.iboard는 그 다음 화면으로 이동하기 위해 사용 -->
 						</c:if>
 					</td>
 				</tr>

@@ -26,10 +26,10 @@ public class UserLoginServlet extends HttpServlet {
 		String uid = request.getParameter("uid");
 		String upw = request.getParameter("upw");
 		
-		UserVO vo = new UserVO();
+		UserVO vo = new UserVO();				// 객체 선언후 uid 저장
 		vo.setUid(uid);
 		
-		UserVO result = UserDAO.selUser(vo);
+		UserVO result = UserDAO.selUser(vo);	// selUser메소드에서 정보를 가져온다.
 		if(result == null) {
 			// 아이디 없음
 			request.setAttribute("errMsg", "아이디를 확인해 주세요.");
@@ -40,14 +40,14 @@ public class UserLoginServlet extends HttpServlet {
 			HttpSession hs = request.getSession();	// session에 담는 것은 대부분 로그인 때문 (http : 통신 후 끊음)
 			hs.setAttribute("loginUser", result);	// 정보를 저장해 둠 -> 끊기면 정보가 사라짐 (loginUser에 저장된 정보가 있는가?)
 			
-			response.sendRedirect("/board/boardList");
+			response.sendRedirect("/board/boardList");	// boardList로 이동
 			return;
 			
 		} else {
 			// 비밀번호 틀림
 			request.setAttribute("errMsg", "비밀번호를 확인해 주세요.");
 		}
-		doGet(request, response);
+		doGet(request, response);			// doGet으로 정보 전달
 	}
 
 }

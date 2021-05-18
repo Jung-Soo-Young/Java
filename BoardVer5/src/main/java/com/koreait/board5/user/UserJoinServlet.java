@@ -25,18 +25,18 @@ public class UserJoinServlet extends HttpServlet {
 		String upw = request.getParameter("upw");
 		String unm = request.getParameter("unm");
 		
-		int gender = MyUtils.getParamInt("gender", request);
+		int gender = MyUtils.getParamInt("gender", request);	// 문자를 정수형으로 변환
 		
-		String hashedUpw = BCrypt.hashpw(upw, BCrypt.gensalt());
+		String hashedUpw = BCrypt.hashpw(upw, BCrypt.gensalt());	// 비밀번호 암호화 과정
 		System.out.println("hashedUpw : " + hashedUpw);
 		
-		UserVO vo = new UserVO();
+		UserVO vo = new UserVO();		// UserVO 객체 선언
 		vo.setUid(uid);
 		vo.setUpw(hashedUpw);
 		vo.setUnm(unm);
 		vo.setGender(gender);
 		
-		UserDAO.joinUser(vo);
+		UserDAO.joinUser(vo);			// vo 정보들 -> joinUser 메소드
 		
 		response.sendRedirect("userLogin");
 	}
