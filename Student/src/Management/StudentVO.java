@@ -38,7 +38,7 @@ public class StudentVO {
 	}
 	
 	public void show() {
-		System.out.println("번호 : " + this.number + "/이름 : " + name + "/나이 : " + age + "살");
+		System.out.println("번호 : " + this.number + " /이름 : " + name + " /나이 : " + age + "살");
 	}
 
 }

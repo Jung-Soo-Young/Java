@@ -3,6 +3,7 @@ package Management;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ public class ScoreDAO {
 	public Scanner sc = new Scanner(System.in);
 	private ArrayList<StudentVO> arStudent = null;	// 학생 객체 배열
 	private ArrayList<Integer> arScore = null;		// 점수 객체 배열
-	private HashMap<StudentVO, ArrayList<Integer>> smsMap = new HashMap<>();
+	private LinkedHashMap<StudentVO, ArrayList<Integer>> smsMap = new LinkedHashMap<>();
 	
 	public void view() {
 		// 메인 view
@@ -72,7 +73,7 @@ public class ScoreDAO {
 	}
 	
 	// 학생 목록
-	public void list(HashMap<StudentVO, ArrayList<Integer>> db) {
+	public void list(LinkedHashMap<StudentVO, ArrayList<Integer>> db) {
 		System.out.println("======[가입 목록]======");
 		Set<Entry<StudentVO, ArrayList<Integer>>> set = db.entrySet();
 		Iterator<Map.Entry<StudentVO, ArrayList<Integer>>> iter = set.iterator();		// Iterator 반복자
