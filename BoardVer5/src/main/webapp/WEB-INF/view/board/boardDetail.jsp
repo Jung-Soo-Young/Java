@@ -6,16 +6,23 @@
 <head>
 <meta charset="UTF-8">
 <title>${data.title}</title>
+<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <style>
-	.hidden {
-		display: none;
-	}
+	.hidden { display: none; }
+	.fa-heart { color : red; }
 </style>
 <script defer src = "/res/js/boardDetail.js"></script>
 </head>
 <body>
 	<div><a href = "boardList">리스트로 돌아가기</a></div>
-	<h1>${data.title}</h1>
+	<h1>${data.title} 
+		<c:if test ="${data.isFav == 0}">
+		<a href = "fav?iboard=${param.iboard}&fav=1"><i class="far fa-heart"></i></a>
+		</c:if>
+		<c:if test ="${data.isFav == 1}">
+		<a href = "fav?iboard=${param.iboard}&fav=0"><i class="fas fa-heart"></i></a>
+		</c:if>
+	</h1>
 	<div>글번호 : ${data.iboard}</div>
 	<div>작성자 : ${data.unm} | 작성일 : ${data.regdt}</div>
 	<div>${data.ctnt}</div>

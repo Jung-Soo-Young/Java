@@ -35,7 +35,7 @@ public class CmtServlet extends HttpServlet {
 		int iuser = MyUtils.getLoginUserPk(request);
 		
 		CmtVO param = new CmtVO();		// CmtVO 객체 선언
-		param.setCmt(cmt);
+		param.setCmt(cmt);				// 로그인한 정보 공통적으로 전송
 		param.setIuser(iuser);
 		
 		if(icmt != 0) {					// 수정

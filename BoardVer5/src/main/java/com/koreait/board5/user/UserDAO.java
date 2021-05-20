@@ -21,7 +21,7 @@ public class UserDAO {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, param.getUid());	// uid 정보를 입력
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if(rs.next()) {						// 결과값이 있다면 다음 값들을 저장
 				int iuser = rs.getInt("iuser");
 				String uid = rs.getString("uid");
 				String upw = rs.getString("upw");
