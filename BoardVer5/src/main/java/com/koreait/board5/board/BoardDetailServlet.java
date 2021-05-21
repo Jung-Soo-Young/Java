@@ -18,6 +18,7 @@ public class BoardDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int iboard = MyUtils.getParamInt("iboard", request);
 		int iuser = MyUtils.getLoginUserPk(request);
+		
 		BoardVO param = new BoardVO();
 		param.setIboard(iboard);
 		param.setIuser(iuser);

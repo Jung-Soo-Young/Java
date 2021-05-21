@@ -22,7 +22,7 @@ public class BoardWriteServlet extends HttpServlet {
 		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");
 		
 		if(loginUser == null) {
-			response.sendRedirect("/user/login");
+			response.sendRedirect("/user/userLogin");
 			return;
 		}
 		MyUtils.openJSP("board/boardWrite", request, response);
@@ -33,7 +33,7 @@ public class BoardWriteServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String ctnt = request.getParameter("ctnt");
 		
-		int iuser = MyUtils.getLoginUserPk(request);
+		int iuser = MyUtils.getLoginUserPk(request);	// 글쓴이 유저의 고유번호 필요
 		
 		BoardVO vo = new BoardVO();
 		vo.setTitle(title);

@@ -29,7 +29,7 @@ public class UserLoginServlet extends HttpServlet {
 		UserVO vo = new UserVO();				// 객체 선언후 uid 저장
 		vo.setUid(uid);
 		
-		UserVO result = UserDAO.selUser(vo);	// selUser메소드에서 정보를 가져온다.
+		UserVO result = UserDAO.selUser(vo);	// result = selUser메소드에서 정보를 가져온다.
 		if(result == null) {
 			// 아이디 없음
 			request.setAttribute("errMsg", "아이디를 확인해 주세요.");
@@ -41,7 +41,7 @@ public class UserLoginServlet extends HttpServlet {
 			hs.setAttribute("loginUser", result);	// 정보를 저장해 둠 -> 끊기면 정보가 사라짐 (loginUser에 저장된 정보가 있는가?)
 			
 			response.sendRedirect("/board/boardList");	// boardList로 이동
-			return;
+			return;										// boardList에서 getAttribute로 loginUser
 			
 		} else {
 			// 비밀번호 틀림

@@ -22,12 +22,12 @@ public class BoardListServlet extends HttpServlet {
 		UserVO loginUser = (UserVO) hs.getAttribute("loginUser");	
 		// session에서 loginUser로 받았기 때문에 jsp에서 사용
 		
-		if(loginUser == null) {
+		if(loginUser == null) {		// loginUser에 값이 없다면 userLogin으로 이동
 			response.sendRedirect("/user/userLogin");
 			return;
 		}
 		
-		List<BoardVO> list = BoardDAO.selBoardList();
+		List<BoardVO> list = BoardDAO.selBoardList();	// list 배열 선언 후 selBoardList() 메소드 정보 저장
 		request.setAttribute("list", list);
 		
 		MyUtils.openJSP("board/boardList", request, response);
