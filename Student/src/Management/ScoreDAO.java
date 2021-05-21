@@ -24,10 +24,12 @@ public class ScoreDAO {
 			System.out.println("학생 관리 시스템");
 			System.out.println("1. 등록");
 			System.out.println("2. 검색");
-			System.out.println("3. 나가기");
+			System.out.println("3. 삭제");
+			System.out.println("4. 수정");
+			System.out.println("5. 나가기");
 			choice = sc.nextInt();
 			sc.nextLine();
-			if (choice == 3) break;
+			if (choice == 5) break;
 			
 			switch(choice) {
 			case 1:
@@ -35,6 +37,12 @@ public class ScoreDAO {
 				break;
 			case 2:
 				search();
+				break;
+			case 3:
+				delete();
+				break;
+			case 4:
+				update();
 				break;
 			default:
 				System.out.println("잘못 입력하였습니다.");
@@ -74,17 +82,22 @@ public class ScoreDAO {
 	
 	// 학생 목록
 	public void list(LinkedHashMap<StudentVO, ArrayList<Integer>> db) {
-		System.out.println("======[가입 목록]======");
+		int size = smsMap.size();
+		
 		Set<Entry<StudentVO, ArrayList<Integer>>> set = db.entrySet();
 		Iterator<Map.Entry<StudentVO, ArrayList<Integer>>> iter = set.iterator();		// Iterator 반복자
-		
-		while(iter.hasNext()) {
-			Entry<StudentVO, ArrayList<Integer>> temp = iter.next();
-			temp.getKey().show(); 						// 한 학생의 객체 출력
-			for(int score : temp.getValue()) {
-				System.out.print(score + "점  ");
+		if(size == 0) {
+			System.out.println("등록된 학생이 없습니다.");
+		} else {
+			System.out.println("======[가입 목록]======");
+			while(iter.hasNext()) {
+				Entry<StudentVO, ArrayList<Integer>> temp = iter.next();
+				temp.getKey().show(); 						// 한 학생의 객체 출력
+				for(int score : temp.getValue()) {
+					System.out.print(score + "점  ");
+				}
+				System.out.println("\n");
 			}
-			System.out.println("\n");
 		}
 		
 	}
@@ -103,8 +116,7 @@ public class ScoreDAO {
 			StudentVO std = iter.next();
 			if(name.equals(std.getName())) {	// 입력한 이름과 저장된 이름이 같은가?
 				std.show();						// 같다면 정보를 불러온다.
-				System.out.println("   국어      영어      수학");
-				System.out.println("   ");
+				System.out.println("   국어     영어     수학     ");
 				for(int score : smsMap.get(std)) {
 					System.out.print(score + "점  ");
 				}
@@ -115,11 +127,71 @@ public class ScoreDAO {
 	
 	// 학생 정보 수정
 	public void update() {
+		list(smsMap);
+		int num = 0, choice = 0;
+		boolean isUser = false;
 		
+		System.out.println("수정할 학생의 번호 : ");
+		num = sc.nextInt();
+
+		Iterator<StudentVO> iter = smsMap.keySet().iterator();
+		while(iter.hasNext()) {
+			StudentVO std = iter.next();
+			if(num == std.getNumber()) {
+				isUser = true;
+				System.out.println("1. 정보수정\n2. 점수수정");
+				choice = sc.nextInt();
+				sc.nextLine();
+				switch(choice) {
+				case 1:
+					System.out.println("이름과 나이를 순서대로 입력하세요.");
+					std.setName(sc.next());
+					std.setAge(Integer.parseInt(sc.next()));
+					sc.nextLine();
+					break;
+				case 2:
+					System.out.println("국어 영어 수학 점수를 순서대로 입력하세요.");
+					for(int i=0; i<SUBJECT_SIZE; i++) {
+						smsMap.get(std).set(i, sc.nextInt());
+					}
+					sc.nextLine();
+					System.out.println("수정 완료");
+					break;
+				default:
+					isUser = false;
+					System.out.println("수정 실패");
+				}
+			} 
+		}
+		if(!isUser) {
+			System.out.println("수정하실 학생이 없습니다.");
+		}
+		list(smsMap);
 	}
+	
 	// 학생 정보 삭제
 	public void delete() {
+		//Iterator로 검색 (번호)
+		int num = 0;
+		StudentVO delStd = null;
+		System.out.println("삭제할 학생의 번호를 입력하세요.");
+		num = sc.nextInt();
+		sc.hasNextLine();
+		Iterator <StudentVO> iter = smsMap.keySet().iterator();
 		
+		while(iter.hasNext()){
+			StudentVO std = iter.next();
+			if(num == std.getNumber()) {
+				delStd = std;
+			}
+		}
+		if (delStd == null) {
+			System.out.println("입력하신 번호의 학생이 없습니다.");
+		} else {
+			smsMap.remove(delStd);
+			System.out.println("삭제 완료");
+			list(smsMap);
+		}
 	}
 	
 }
