@@ -29,6 +29,7 @@ public class BoardCmtInsSelServlet extends HttpServlet {
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		
+		response.setCharacterEncoding("UTF-8");
 		response.getWriter()
 		.append(json);
 	}
@@ -36,7 +37,7 @@ public class BoardCmtInsSelServlet extends HttpServlet {
 	// 등록
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int iboard = MyUtils.getParamInt("iboard", request);
-		int iuser = MyUtils.getLoginUserPk(request);
+		int iuser = MyUtils.getLoginUserPk(request);	// iuser 고유키 = PK
 		String cmt = request.getParameter("cmt");
 		
 		BoardCmtEntity param = new BoardCmtEntity();
@@ -52,8 +53,6 @@ public class BoardCmtInsSelServlet extends HttpServlet {
 		.append(String.valueOf(result)) // 형 변환
 		.append("}")
 		.flush();						// {"result": 1}
-		
-		
 		
 		
 	}

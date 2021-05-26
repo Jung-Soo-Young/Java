@@ -18,7 +18,7 @@ public class BoardDAO {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT CEIL(COUNT(iboard) / ?)")		// CEIL = 올림
-		.append(" FROM t_board A ")
+		.append(" FROM t_board A ")						// .append (이어 붙임)
 		.append(" INNER JOIN t_user B ")
 		.append(" ON A.iuser = B.iuser ");
 		
@@ -38,7 +38,7 @@ public class BoardDAO {
 		case 2: // 제목
 			sb.append("A.title LIKE '%")
 			.append(param.getSearchText())
-			.append("%' ");	
+			.append("%' ");
 			break;
 			
 		case 3: // 내용

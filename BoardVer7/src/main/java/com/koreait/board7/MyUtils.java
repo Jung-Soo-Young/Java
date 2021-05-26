@@ -41,7 +41,7 @@ public class MyUtils {
 			throws ServletException, IOException {
 		req.setAttribute("title", title);
 		req.setAttribute("jsp", jsp);
-		String temp = "/WEB-INF/view/template.jsp";
+		String temp = "/WEB-INF/view/template.jsp";		// openJSP = template.jsp로 이동
 		req.getRequestDispatcher(temp).forward(req, res);
 	}
 }

@@ -17,10 +17,10 @@ public class BoardListServlet extends HttpServlet {
     	BoardDTO param = new BoardDTO();
     	
     	// 페이징
-    	final int recordCnt = 10;
+    	final int recordCnt = 10;	// 한 페이지에 나타날 게시글 수
     	int cPage = MyUtils.getParamInt("cPage", request);	// cPage의 키 값이 없을 경우 0
     	if(cPage == 0) { cPage = 1;	}
-    	int startIdx = (cPage - 1) * recordCnt;
+    	int startIdx = (cPage - 1) * recordCnt;		// 게시글이 많을 경우 페이징 개수
     	param.setStartIdx(startIdx);
     	param.setRecordCnt(recordCnt);
     	
@@ -29,6 +29,7 @@ public class BoardListServlet extends HttpServlet {
     	String searchText = request.getParameter("searchText");
     	
     	if(searchType != 0 && searchText != null && !searchText.equals("")) {
+    		// type가 0이 아니고 text 값이 null과 공백이 아닐 경우에
         	param.setSearchText(searchText);
         	param.setSearchType(searchType);
     	}
