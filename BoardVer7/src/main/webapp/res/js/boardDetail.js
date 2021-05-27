@@ -1,5 +1,6 @@
 var cmtFrmElem = document.querySelector('#cmtFrm');
 var cmtListElem = document.querySelector('#cmtList'); // id = "cmtList"
+var cmtModModalElem = document.querySelector('#modal');
 
 function regCmt() {
 	var cmtVal = cmtFrmElem.cmt.value;
@@ -23,7 +24,7 @@ function regAgax(param) {
 	.then(function(res) {
 		return res.json();
 	})
-	.then(function(myJson) {
+	.then(function(myJson) { // myJson = res.json();
 		console.log(myJson);
 		
 		switch(myJson.result) {
@@ -31,12 +32,12 @@ function regAgax(param) {
 				alert('등록 실패!');
 				break;
 			case 1:
-				cmtFrmElem.cmt.value = '';
+				cmtFrmElem.cmt.value = ''; // 수정 후 초기화
 				
 				getListAjax();
 			break;
 		}
-	});ㄴ
+	});
 }
 
 // 서버에게 댓글 리스트 자료 달라고 요청하는 함수
@@ -99,8 +100,16 @@ function makeCmtElemList(data) {	// boardDetail.jsp 의 내용들
 			var modBtn = document.createElement('button');
 			
 			// 삭제 버튼 클릭시
-			delBtn.addEventListener('click', function(){
-				delAjax(item.icmt); // icmt값 불러오기
+			delBtn.addEventListener('click', function() {
+				if(confirm('삭제하시겠습니까?')) {	// confirm = boolean (참, 거짓)
+					delAjax(item.icmt); // icmt값 불러오기
+				}					
+			});
+			
+			// 수정 버튼 클릭시
+			modBtn.addEventListener('click', function() {
+				// 댓글 수정 모달창 띄우기
+				openModModal(item);
 			});
 			
 			delBtn.innerText = '삭제';
@@ -136,6 +145,52 @@ function delAjax(icmt) {
 			break;
 		}
 	});
+}
+
+function modAjax() {
+	var cmtModFrmElem = document.querySelector('#cmtModFrm');
+	var param = {
+		icmt: cmtModFrmElem.icmt.value,
+		cmt: cmtModFrmElem.cmt.value
+	}
+	
+	const init = {
+		method : 'POST',
+		body : new URLSearchParams(param)
+	};
+	
+	fetch('cmtDelUpd', init)
+	.then(function(res) {
+		return res.json();
+	})
+	.then(function(myJson) {
+		
+		switch(myJson) {
+		case 0:
+			alert ('수정 실패!');
+			break;
+		case 1:
+			getListAjax();		// 리스트를 보여주는 역할
+			
+			closeModModal();	// 댓글 수정 모달 닫기
+			break;
+		}
+	});
+
+}
+
+function openModModal({icmt, cmt}) { // {icmt, cmt} 값을 받아온다.
+	console.log('icmt : ' + icmt);
+	console.log('cmt : ' + cmt);
+	cmtModModalElem.className = '';
+	
+	var cmtModFrmElem = document.querySelector('#cmtModFrm');
+	cmtModFrmElem.icmt.value = icmt;
+	cmtModFrmElem.cmt.value = cmt;
+}
+
+function closeModModal() {
+	cmtModModalElem.className = 'displayNone';
 }
 
 getListAjax();	// 이 파일이 임포트되면 함수 1회 호출! (리스트에 뿌려주는 역할)

@@ -26,7 +26,7 @@ public class BoardCmtInsSelServlet extends HttpServlet {
 		
 		List<BoardCmtDomain> list = BoardCmtDAO.selBoardCmtList(param);
 		
-		Gson gson = new Gson();
+		Gson gson = new Gson();				// json 실행 과정
 		String json = gson.toJson(list);
 		
 		response.setCharacterEncoding("UTF-8");
