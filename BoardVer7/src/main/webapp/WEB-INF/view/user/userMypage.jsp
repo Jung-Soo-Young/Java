@@ -7,11 +7,11 @@
 		<c:set var="img" value = "/res/img/noprofile.jpg"/>
 	</c:when>
 	<c:otherwise>
-		<c:set var="img" value="${sessionScope.loginUser.profileImg}"/>
+		<c:set var="img" value="/res/img/user/${sessionScope.loginUser.iuser}/${sessionScope.loginUser.profileImg}"/>
 	</c:otherwise>
 </c:choose>
 <div>
-	<form action = "mypage" method = "post" enctype = "multipart/form-data">
+	<form id="frm" action = "mypage" method = "post" enctype = "multipart/form-data" onsubmit="return imgChk();">
 		이미지변경 : <input type = "file" name = "profileImg" accept="image/*">
 		<input type = "submit" value = "이미지 업로드">
 	</form>
@@ -22,3 +22,17 @@
 	<div>ID : ${sessionScope.loginUser.uid}</div>
 	<div>Name : ${sessionScope.loginUser.unm}</div>
 </div>
+
+<script>
+	var frmElem = document.querySelector('#frm');
+	function imgChk() {
+		if(frmElem.profileImg.files.length === 0) {
+			alert('이미지를 선택해 주세요.');
+			return false;
+		}
+	}
+</script>
+
+<!-- setAttribute (4가지 종류)
+pageContext, request, session, application
+-->

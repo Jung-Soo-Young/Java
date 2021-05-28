@@ -59,4 +59,35 @@ public class UserDAO {
 			DBUtils.close(con, ps, rs);
 		}		
 	}
+	
+	public static int updUser(UserEntity param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		String updString = null;
+		
+		String sql = "UPDATE t_user SET ";
+		if(param.getUpw() != null && param.getUpw().equals("")) {
+			sql += " upw = ? ";
+			updString = param.getUpw();
+		} else if(param.getProfileImg() != null && !param.getProfileImg().equals("")) {
+			sql += " profileImg = ? ";
+			updString = param.getProfileImg();
+		}
+		sql += " WHERE iuser = ? ";
+		
+		try {
+			con = DBUtils.getCon();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, updString);
+			ps.setInt(2, param.getIuser());
+			return ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.close(con, ps);
+		}
+	}
 }
